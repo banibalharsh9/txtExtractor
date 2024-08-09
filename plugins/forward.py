@@ -59,9 +59,12 @@ import os
 
 
 @bot.on_message(
-    filters.chat(AUTH_USERS) & filters.private &
-    filters.incoming & filters.command("forward", prefixes=prefixes)
+    filters.chat(AUTH_USERS) &
+    filters.private &
+    filters.incoming &
+    filters.command("forward", prefixes=prefixes)
 )
+
 async def forward(bot: Client , m: Message):
     msg = await bot.ask(m.chat.id, "**Forward any message from the Target channel\nBot should be admin at both the Channels**")
     t_chat = msg.forward_from_chat.id
