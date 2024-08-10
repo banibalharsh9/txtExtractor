@@ -22,13 +22,25 @@ logging.basicConfig(
     ]
 )
 
+# Define command prefixes, adjust as needed
+prefixes = ["!", "/"]
+
 # Define authorized users
 AUTH_USERS = [int(chat) for chat in Config.AUTH_USERS.split(",") if chat != ""]
+
+# Custom HTTP request handler to support OPTIONS method
+class CORSRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(200, "ok")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "*")
+        self.end_headers()
 
 # Simple HTTP server to keep the platform happy with port binding
 def start_server():
     port = int(os.environ.get("PORT", 8080))
-    handler = http.server.SimpleHTTPRequestHandler
+    handler = CORSRequestHandler
     with socketserver.TCPServer(("", port), handler) as httpd:
         LOGGER.info(f"Serving on port {port}")
         httpd.serve_forever()
