@@ -17,3 +17,4 @@ RUN apt-get update && \
 # Command to run the application
 CMD ["python", "./main.py"]
 EXPOSE 8080
+EXPOSE 8080
