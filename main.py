@@ -43,12 +43,13 @@ logging.basicConfig(
 )
 
 # Auth Users
-AUTH_USERS = [ int(chat) for chat in Config.AUTH_USERS.split(",") if chat != '']
+AUTH_USERS = [int(chat) for chat in Config.AUTH_USERS.split(",") if chat != '']
 
 # Prefixes 
 prefixes = ["/", "~", "?", "!"]
 
 plugins = dict(root="plugins")
+
 if __name__ == "__main__" :
     bot = Client(
         "macc",
@@ -57,19 +58,18 @@ if __name__ == "__main__" :
         api_hash=Config.API_HASH,
         sleep_threshold=20,
         plugins=plugins,
-        workers = 50
+        workers=50,
     )
     
     async def main():
         await bot.start()
-        bot_info  = await bot.get_me()
-        LOGGER.info(f"<--- @{bot_info.username} Started--->")
+        bot_info = await bot.get_me()
+        LOGGER.info(f"<--- @Uploaderv4_bot Started--->")
         await idle()
-        
-     # Bind the bot to the port provided by the environment
+    
+    # Bind the bot to the port provided by the environment
     port = int(os.environ.get('PORT', 8080))
     os.environ["FLASK_RUN_PORT"] = str(port)
-    
-    
+
     asyncio.get_event_loop().run_until_complete(main())
-    LOGGER.info(f"<---Bot Stopped-->")
+    LOGGER.info(f"<--- Bot Stopped --->")
