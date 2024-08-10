@@ -40,8 +40,14 @@ def main():
         await idle()
 
     # Bind the bot to the port provided by the environment
-    port = int(os.environ.get(PORT, 8080))
-    os.environ["FLASK_RUN_PORT"] = str(port)
+    # Other setup code...
+
+    port = int(os.environ.get("PORT", 8080))  # Corrected line
+    app.run(host="0.0.0.0", port=port)
+
+if __name__ == "__main__":
+    main()
+
     
     try:
         asyncio.get_event_loop().run_until_complete(run_bot())
